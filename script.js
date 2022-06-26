@@ -1,12 +1,9 @@
-// Write your JavaScript code here!
-
-const { formSubmission } = require("./scriptHelper");
 
 window.addEventListener("load", function() {
 
    let listedPlanets;
    // Set listedPlanetsResponse equal to the value returned by calling myFetch()
-   let listedPlanetsResponse;
+   let listedPlanetsResponse = myFetch()
    listedPlanetsResponse.then(function (result) {
        listedPlanets = result;
        console.log(listedPlanets);
@@ -20,12 +17,12 @@ window.addEventListener("load", function() {
   
    
         form.addEventListener("submit", function(event){
-            let pilot = form.querySelector("input[name=pilotName]");
-            let copilot = form.querySelector("input[name=copilotName]");
-            let fuelLevel = form.querySelector("input[name=fuelLevel]");
-            let cargoMass = form.querySelector("input[name=cargoMass]");
+            let pilot = document.querySelector("input[name=pilotName]");
+            let copilot = document.querySelector("input[name=copilotName]");
+            let fuelLevel = document.querySelector("input[name=fuelLevel]");
+            let cargoMass = document.querySelector("input[name=cargoMass]");
            formSubmission(document, list, pilot.value, copilot.value, fuelLevel.value, cargoMass.value);
-           event.preventDefault();
+        
         })
 
         form.addEventListener("submit", function(event){
@@ -37,24 +34,30 @@ window.addEventListener("load", function() {
             let launchStatus = document.getElementById("launchStatus")
             let fuelLevelText = document.getElementById("fuelStatus")
             let cargoMassText = document.getElementById("cargoStatus")
+            let pilot = document.querySelector("input[name=pilotName]");
+            let copilot = document.querySelector("input[name=copilotName]");
 
 
-            pilotStatus.innerHTML = document.querySelector("input[name=pilotName]")
-            copilotStatus.innerHTML = document.querySelector("input[name=copilotName]")
+            pilotStatus.innerHTML = `${pilot.value} is ready for launch`
+            copilotStatus.innerHTML = `${copilot.value} is ready for launch`
           
         if (fuelLevelStatus.value < 10000){
             faultyItems.style.visibility = 'visible'
             launchStatus.style.color = 'red'
             launchStatus.innerHTML = "Shuttle not ready for launch"
             fuelLevelText.innerHTML = "Fuel level too low for launch"
+            event.preventDefault()
         } else if (cargoMassStatus.value > 10000){
             faultyItems.style.visibility = 'visible'
             launchStatus.style.color = 'red'
             launchStatus.innerHTML = "Shuttle not ready for launch"
             cargoMassText.innerHTML = "Cargo mass too high for launch"
+            event.preventDefault()
         } else {
+            faultyItems.style.visibility = 'hidden'
             launchStatus.innerHTML = "Shuttle is ready for launch"
             launchStatus.style.color = "green"
+            event.preventDefault()
         }
 
 
@@ -64,6 +67,6 @@ window.addEventListener("load", function() {
 
 
 
-
+event.preventDefault()
 
 });
