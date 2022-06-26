@@ -1,19 +1,19 @@
 
 require('isomorphic-fetch');
 
-function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
+function addDestinationInfo(pickedPlanet) {
 
         const div = document.getElementById("missionTarget")
         div.innerHTML = `
           <h2>Mission Destination</h2>
             <ol>
-                <li>Name:${json.name} </li>
-                <li>Diameter:${json.diameter} </li>
-                 <li>Star: ${json.star}</li>
-                 <li>Distance from Earth: ${json.distance}</li>
-                 <li>Number of Moons:${json.moons} </li>
+                <li>Name:${pickedPlanet.name} </li>
+                <li>Diameter:${pickedPlanet.diameter} </li>
+                 <li>Star: ${pickedPlanet.star}</li>
+                 <li>Distance from Earth: ${pickedPlanet.distance}</li>
+                 <li>Number of Moons:${pickedPlanet.moons} </li>
              </ol>
-             <img src=${json.image}>
+             <img src=${pickedPlanet.image}>
         
         
         
@@ -48,17 +48,17 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoMass) {
 
 async function myFetch() {
     let planetsReturned;
-
+    let json = []
     planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
-        response.json().then(function(json){
-
-        }
-    )});
-
-    return planetsReturned;
+       json = response.json()
+    });
+       
+    return json;
 }
 
 function pickPlanet(planets) {
+  planets =  Math.floor(Math.random()*6)
+  return planets
 }
 
 module.exports.addDestinationInfo = addDestinationInfo;
